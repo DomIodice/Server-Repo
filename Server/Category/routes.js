@@ -1,9 +1,17 @@
-const { Router } = require('express');
-const controller = require('./controller');
+const router = require("express").Router();
+const { PrismaClient } = require("@prisma/client")
 
-const router = Router();
+const { category } = new PrismaClient()
 
-router.get('/', controller.getCategory);
+router.get('/', async (req, res) => {
+    const categories = await category.findMany({
+        select: {
+            id: true,
+            name: true
+        }
+    });
+    res.json(categories)
+})
 
 
 module.exports = router;

@@ -1,4 +1,4 @@
-const express = require ('express');
+const express = require('express');
 const articleRoutes = require('./Article/routes');
 const authorRoutes = require('./Author/routes');
 const categoryRoutes = require('./Category/routes');
@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
     res.send("hello guys");
 });
 
-app.post("/back", (req,res) => {
+app.post("/back", (req, res) => {
     res.send('POST request')
 })
 

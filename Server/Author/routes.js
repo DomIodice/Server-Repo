@@ -1,11 +1,28 @@
-const { Router } = require('express');
-const controller = require('./controller');
+const router = require("express").Router();
+const { PrismaClient } = require("@prisma/client")
 
-const router = Router();
+const { author } = new PrismaClient()
 
-router.get('/', controller.getAuthor);
-router.post('/', controller.addAuthor);
-router.get('/:id', controller.getAuthorById);
+router.get('/', async (req, res) => {
+    const authors = await author.findMany({
+        select: {
+            id: true,
+            name: true
+        }
+    });
+    res.json(authors)
+})
+
+router.post('/', async (req, res) => {
+    const { name } = req.body;
+
+    const addAuthor = await author.create({
+        data: {
+            name: name
+        }
+    });
+    res.json(addAuthor)
+})
 
 
 module.exports = router;
